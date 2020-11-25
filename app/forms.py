@@ -12,11 +12,7 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email*', validators=[DataRequired(), Email()])
     password = PasswordField('Şifrə*', validators=[DataRequired()])
     confirm_password = PasswordField('Təsdiq Şifrəsi*', validators=[DataRequired(), EqualTo('password')])
-    # birthday = DateField('Doğum Tarixi*', format='%Y-%m-%d', validators=[DataRequired()])
-    # school = StringField('Təhsil Aldığınız Məktəb', validators=[Length(min=1, max=100)])
-    # grade = SelectField(u'Təhsil pilləsi', choices  = [('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10'), ('11', '11')], coerce=int)
-    # experience = TextAreaField('Riyaziyyat Olimpiadalarında Edindiyiniz Təcrübələr')
-    submit = SubmitField('Qeydiyyatı Tamamla')
+    submit = SubmitField('Qeydiyyatı Tamamla', render_kw={"style": "width:100%;"})
 
     def validate_username(self, username):
 
@@ -37,14 +33,18 @@ class LoginForm(FlaskForm):
     email = StringField('Email Ünvanı', validators=[DataRequired(), Email()], render_kw={"placeholder": "Email Ünvanı"})
     password = PasswordField('Şifrə', validators=[DataRequired()], render_kw={"placeholder": "Şifrə"})
     remember = BooleanField('Remember Me')
-    submit = SubmitField('Hesabıma Daxil Ol')
+    submit = SubmitField('Hesabıma Daxil Ol', render_kw={"style": "width:100%;"})
 
 
 class UpdateAccountForm(FlaskForm):
-    username = StringField('İstifadəçi Adı',
-                           validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()])
+    username = StringField('İstifadəçi Adı', validators=[DataRequired(), Length(min=2, max=20)])
+    firstname = StringField('Ad', validators=[DataRequired(), Length(min=2, max=20)])
+    lastname = StringField('Soyad', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    birthday = DateField('Doğum Tarixi', format='%Y-%m-%d', validators=[DataRequired()])
+    school = StringField('Təhsil Aldığınız Məktəb', validators=[Length(min=1, max=100)])
+    grade = SelectField(u'Təhsil pilləsi', choices  = [('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10'), ('11', '11')], coerce=int)
+    experience = TextAreaField('Riyaziyyat Olimpiadalarında Edindiyiniz Təcrübələr')
     picture = FileField('Profil şəklini yenilə', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Yenilə')
 
@@ -64,6 +64,6 @@ class UpdateAccountForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    content = TextAreaField('Content', validators=[DataRequired()])
-    submit = SubmitField('Post')
+    title = StringField('Başlıq', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Başlığı"})
+    content = TextAreaField('Məqalənin Detalları', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Mətnini Bura Yazın..."})
+    submit = SubmitField('Məqaləni Paylaşmaq Üçün Bizə Sorğu Göndər', render_kw={"style": "width:100%;"})

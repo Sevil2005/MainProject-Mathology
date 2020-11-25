@@ -17,7 +17,7 @@
                 <div class="row clearfix">
                     <div class="container">
                         {% if current_user.is_authenticated %}
-                            <button><a href="{{ url_for('new_post')}}">Post Paylaş</a></button>
+                            <a class="theme-btn style-six mb-20" href="{{ url_for('new_post')}}">Post Paylaş</a>
                         {% endif %}
                     </div>
                     {% for post in posts %}

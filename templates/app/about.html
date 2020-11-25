@@ -2,7 +2,7 @@
 {% block content %}
         <!--Page Title-->
         <section class="page-title text-center style-two">
-            <div class="pattern-layer" style="background-image: url(static/assets/images/shape/shape-62.png);"></div>
+            <div class="pattern-layer" style="background-image: url({{ url_for('static', filename='assets/images/shape/shape-62.png') }})"></div>
             <div class="auto-container">
                 <div class="content-box">
                     <h1>{{ title }}</h1>

@@ -1,0 +1,29 @@
+{% extends "admin/starter.html" %}
+{% block main %}
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>First</th>
+        <th>Last</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <a><button><i class="fa fa-edit"></i></button></a>
+                <a href="{{url_for('delete', id = user.id)}}"><button><i class="fa fa-trash"></i></button></a>
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}
+{% block script %}
+<script src="../static/js/table.js"></script>
+{% endblock %}

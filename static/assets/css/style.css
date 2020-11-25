@@ -3055,7 +3055,7 @@
 
 .news-section.style-two{
 	position: relative;
-	padding: 125px 0px;
+	padding: 50px 0px;
 }
 
 .news-section.home-boxed{
@@ -6070,7 +6070,7 @@
 
 #content_block_09 .content-box #contact-form .form-group textarea{
 	display: block;
-	height: 120px;
+	height: 500px;
 	resize: none;
 	margin-bottom: 4px;
 }

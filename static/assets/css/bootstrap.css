@@ -2201,7 +2201,7 @@ textarea.form-control {
 
 .form-check {
   position: relative;
-  display: block;
+  display: inline-block;
   padding-left: 1.25rem;
 }
 

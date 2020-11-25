@@ -92,17 +92,18 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('app/account.html', title='Account', image_file=image_file, form=form)
+    return render_template('app/user/account.html', title='Hesabım', image_file=image_file, form=form)
 
 
-@app.route('/riyaziyyat-olimpiadaları')
+@app.route('/respublika-fənn-olimpiadası')
 def olympiads():
-    return render_template('app/olympiads.html', title="Riyaziyyat Olimpiadaları")
+    return render_template('app/national_olympiads.html', title="Respublika Fənn Olimpiadası")
 
 
-@app.route('/tövsiyə-edilən-materiallar')
+@app.route('/beynəlxalq-olimpiadalar')
 def materials():
-    return render_template('app/materials.html', title="Tövsiyə Edilən Materiallar")
+    return render_template('app/international_olympiads.html', title="Beynəlxalq Olimpiadalar")
+
 
 @app.route('/məsləhət-bloqu')
 def blog():
@@ -115,12 +116,12 @@ def blog():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post( title = form.title.data, content = form.content.data, author = current_user )
+        post = Post(title = form.title.data, content = form.content.data, author = current_user )
         db.session.add(post)
         db.session.commit()
-        flash('Your post has been created', 'success')
+        flash('Yeni məqalə haqqında sorğu sistemə uğurla göndərildi!', 'success')
         return redirect(url_for('blog'))
-    return render_template('app/create_post.html', title="Yeni Məqalə", form=form)
+    return render_template('app/adviceBlog/create_post.html', title="Yeni Məqalə", form=form)
 
 
 @app.route("/məsləhət-bloqu/<int:post_id>")
