@@ -1,0 +1,87 @@
+{% extends "app/layout.html" %}
+{% block content %}
+        <!--Page Title-->
+        <section class="page-title text-center style-two">
+            <div class="pattern-layer" style="background-image: url(static/assets/images/shape/shape-62.png);"></div>
+            <div class="auto-container">
+                <div class="content-box">
+                    <h1>{{ title }}</h1>
+                </div>
+            </div>
+        </section>
+        <!--End Page Title-->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <!-- contact-section -->
+            <section class="contact-section alternate-2 mt-55">
+                <div class="pattern-layer" style="background-image: url(static/assets/images/shape/shape-48.png);"></div>
+                <div class="auto-container">
+                    <div class="row clearfix">
+                        <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                            <div id="content_block_09">
+                                <div class="content-box">
+                                    <form method="POST" action="" novalidate id="contact-form" class="default-form"> 
+                                        {{ form.hidden_tag() }}
+                                        <div class="form-group">
+                                            <label><i class="fa fa-envelope" style="display: inline;"></i>{{ form.email.label(style="display:inline;") }}</label>
+                                            {% if form.email.errors %}
+                                                {{ form.email(class="is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.email.errors %}
+                                                        <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                {{ form.email }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i class="fa fa-lock" style="display: inline;"></i>{{ form.password.label(style="display: inline;") }}</label>
+                                            {% if form.password.errors %}
+                                                {{ form.password(class="is-invalid input-style") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.password.errors %}
+                                                        <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                {{ form.password(class="input-style") }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-check">
+                                            {{ form.remember(class="form-check-input") }}
+                                            {{ form.remember.label(class="form-check-label") }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form.submit(class="theme-btn style-one") }}
+                                        </div>
+                                        <small class="text-muted">
+                                            <a href="#"><h6>Şifrənizi unutmusunuz?</h6></a>
+                                        </small>
+                                        <div class="border-top pt-3">
+                                            <small class="text-muted">
+                                                <h6 style="display: inline;">Hesabınız yoxdur?</h6><a class="ml-2" href="{{ url_for('register') }}"><h6 style="display: inline;">İndi Qeydiyyatdan Keç</h6></a>
+                                            </small>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                            <div class="image-box wow slideInRight" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                <figure class="image js-tilt"><img src="static/assets/images/resource/illastration-6.png" alt=""></figure>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+            </section>
+        <!-- contact-section end -->
+{% endblock content %}

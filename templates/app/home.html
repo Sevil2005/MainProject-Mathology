@@ -1,0 +1,22 @@
+{% extends "app/layout.html" %}
+{% block content %}
+        <!-- banner-section -->
+        <section class="banner-style-three">
+            <div class="pattern-layer" style="background-image: url(static/assets/images/shape/shape-18.png);"></div>
+            <div class="auto-container">
+                <div class="row clearfix align-items-center">
+                    <div class="col-lg-5 col-md-12 col-sm-12 content-column">
+                        <div class="content-box">
+                            <h1>Riyaziyyat & Onun Sirrli Dünyası.</h1>
+                            <p>Mathology ilə riyaziyyat olimpiadalarına uğurla hazırlaşmanın sirrlərini kəşf edəcəksiniz.</p>
+                            <div class="btn-box">
+                                <a href="{{ url_for('register') }}" class="theme-btn style-seven"><i class="flaticon-next"></i>Qeydiyyat</a>
+                                <a href="{{ url_for('login') }}" class="theme-btn style-six">Daxil Ol</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- banner-section end -->
+{% endblock %}
