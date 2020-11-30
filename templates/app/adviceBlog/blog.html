@@ -11,6 +11,16 @@
         </section>
         <!--End Page Title-->
 
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
         <!-- news-section -->
         <section class="news-section style-two style-three">
             <div class="auto-container">
@@ -29,15 +39,15 @@
                                         <a href="static/assets/images/news/news-1.jpg" class="lightbox-image" data-fancybox="gallery"><i class="flaticon-zoom"></i></a>
                                     </figure>
                                     <div class="lower-content">
-                                        <div class="file-box"><i class="far fa-folder-open"></i><p>Data Engineering</p></div>
+                                        <div class="file-box" style="display:inline-flex;"><i class="fa fa-feather"></i><p><h6>{{ post.author.username }}<h6></p></div>
                                         <div class="title-box">
-                                            <div class="post-date"><p>05</p><span>Jan</span></div>
-                                            <h4><a href="blog-details.html">Naxly Named as a Global Leader in Big Data</a></h4>
+                                            <div class="post-date"><p>{{ post.date_posted.strftime('%d') }}</p><span>{{ post.date_posted.strftime('%b') }}</span></div>
+                                            <h4><a href="blog-details.html">{{ post.title }}</a></h4>
                                         </div>
                                         <div class="text">
-                                            <p>Equal blame belongs too those who fail in their through weakness will shrinking.</p>
+                                            <p>{{ post.content }}</p>
                                         </div>
-                                        <div class="link"><a href="blog-details.html"><i class="flaticon-next"></i>Read More</a></div>
+                                        <div class="link"><a href="{{ url_for('post', post_id= post.id) }}"><i class="flaticon-next"></i>Ətraflı Oxu</a></div>
                                     </div>
                                 </div>
                             </div>

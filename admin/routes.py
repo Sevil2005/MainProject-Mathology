@@ -18,3 +18,13 @@ def delete(id):
     db.session.delete(selectedPerson)
     db.session.commit()
     return redirect(url_for("students"))
+
+
+@app.route('/add-book')
+def addBookForm():
+    books = Book.query.all()
+    return render_template('/admin/addBookForm.html', books=books)
+
+@app.route('/advice-articles')
+def adviceForm():
+    return render_template('/admin/adviceForm.html')

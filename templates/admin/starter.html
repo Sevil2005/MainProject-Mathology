@@ -5,19 +5,19 @@
         <meta charset="utf-8" />
         <title>Mathology - Admin Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Mathology Admin & Dashboard" name="description" />
         <meta content="" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
         <!-- App favicon -->
-        <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/x-icon">
+        <link rel="icon" href="{{ url_for('static', filename='main-img/icon.png') }}" type="image/x-icon">
 
         <!-- App css -->
-        <link href="../static/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="../static/admin/css/jquery-ui.min.css" rel="stylesheet">
-        <link href="../static/admin/css/icons.min.css" rel="stylesheet" type="text/css" />
-        <link href="../static/admin/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
-        <link href="../static/admin/css/app.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename='admin/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename='admin/css/jquery-ui.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='admin/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename='admin/css/metisMenu.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename='admin/css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
         <link href="{{ url_for('static', filename='admin/css/jquery-ui.min.css') }}" rel="stylesheet">
         <link href="{{ url_for('static', filename='admin/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -33,7 +33,7 @@
             <div class="main-icon-menu">
                 <a href="../crm/crm-index.html" class="logo logo-metrica d-block text-center">
                     <span>
-                        <img src="../static/images/icon-md.png" alt="logo-small" class="logo-sm">
+                        <img src="{{ url_for('static', filename='main-img/icon.png') }}" alt="logo-small" class="logo-sm">
                     </span>
                 </a>
                 <nav class="nav">
@@ -53,7 +53,7 @@
                 </nav><!--end nav-->
                 <div class="pro-metrica-end">
                     <a href="" class="profile">
-                        <img src="../static/admin/images/users/user-4.jpg" alt="profile-user" class="rounded-circle thumb-sm">
+                        <img src="{{ url_for('static', filename='main-img/me.jpg') }}" alt="profile-user" class="rounded-circle thumb-sm">
                     </a>
                 </div>
             </div><!--end main-icon-menu-->
@@ -63,8 +63,7 @@
                 <div class="topbar-left">
                     <a href="../crm/crm-index.html" class="logo">
                         <span>
-                            <img src="../static/admin/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
-                            <img src="../static/admin/images/logo.png" alt="logo-large" class="logo-lg logo-light">
+                            <img src="{{ url_for('static', filename='main-img/logo.png') }}" alt="logo-large" class="logo-lg logo-dark">
                         </span>
                     </a>
                 </div>
@@ -77,8 +76,6 @@
                         </div>
                         <ul class="nav">
                             <li class="nav-item"><a class="nav-link" href="{{ url_for('students') }}">Tələbələr</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../pages/pages-tour.html">Adminlər</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../pages/pages-timeline.html">Yazıçılar</a></li>
                         </ul>
                     </div><!-- end Users -->
 
@@ -87,9 +84,8 @@
                             <h6 class="menu-title">Səhifələr</h6>
                         </div>
                         <ul class="nav">
-                            <li class="nav-item"><a class="nav-link" href="../pages/pages-profile.html">Tövsiyə etdiyimiz materiallar</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../pages/pages-tour.html">Riyaziyyat Olimpiada Sualları</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../pages/pages-timeline.html">Məsləhət Bloqu</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('addBookForm') }}">Kitab Əlavə Et</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('adviceForm') }}">Məsləhət Bloqu</a></li>
                         </ul>
                     </div><!-- end Pages -->
                     <div id="MetricaAuthentication" class="main-icon-menu-pane">
@@ -114,95 +110,10 @@
             <!-- Navbar -->
             <nav class="navbar-custom">
                 <ul class="list-unstyled topbar-nav float-right mb-0">
-                    <li class="dropdown notification-list">
-                        <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="false" aria-expanded="false">
-                            <i class="ti-bell noti-icon"></i>
-                            <span class="badge badge-danger badge-pill noti-icon-badge">2</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-lg pt-0">
-
-                            <h6 class="dropdown-item-text font-15 m-0 py-3 bg-primary text-white d-flex justify-content-between align-items-center">
-                                Notifications <span class="badge badge-light badge-pill">2</span>
-                            </h6>
-                            <div class="slimscroll notification-list">
-                                <!-- item-->
-                                <a href="#" class="dropdown-item py-3">
-                                    <small class="float-right text-muted pl-2">2 min ago</small>
-                                    <div class="media">
-                                        <div class="avatar-md bg-primary">
-                                           <i class="la la-cart-arrow-down text-white"></i>
-                                        </div>
-                                        <div class="media-body align-self-center ml-2 text-truncate">
-                                            <h6 class="my-0 font-weight-normal text-dark">Your order is placed</h6>
-                                            <small class="text-muted mb-0">Dummy text of the printing and industry.</small>
-                                        </div><!--end media-body-->
-                                    </div><!--end media-->
-                                </a><!--end-item-->
-                                <!-- item-->
-                                <a href="#" class="dropdown-item py-3">
-                                    <small class="float-right text-muted pl-2">10 min ago</small>
-                                    <div class="media">
-                                        <div class="avatar-md bg-success">
-                                            <i class="la la-group text-white"></i>
-                                        </div>
-                                        <div class="media-body align-self-center ml-2 text-truncate">
-                                            <h6 class="my-0 font-weight-normal text-dark">Meeting with designers</h6>
-                                            <small class="text-muted mb-0">It is a long established fact that a reader.</small>
-                                        </div><!--end media-body-->
-                                    </div><!--end media-->
-                                </a><!--end-item-->
-                                <!-- item-->
-                                <a href="#" class="dropdown-item py-3">
-                                    <small class="float-right text-muted pl-2">40 min ago</small>
-                                    <div class="media">
-                                        <div class="avatar-md bg-pink">
-                                            <i class="la la-list-alt text-white"></i>
-                                        </div>
-                                        <div class="media-body align-self-center ml-2 text-truncate">
-                                            <h6 class="my-0 font-weight-normal text-dark">UX 3 Task complete.</h6>
-                                            <small class="text-muted mb-0">Dummy text of the printing.</small>
-                                        </div><!--end media-body-->
-                                    </div><!--end media-->
-                                </a><!--end-item-->
-                                <!-- item-->
-                                <a href="#" class="dropdown-item py-3">
-                                    <small class="float-right text-muted pl-2">1 hr ago</small>
-                                    <div class="media">
-                                        <div class="avatar-md bg-warning">
-                                            <i class="la la-truck text-white"></i>
-                                        </div>
-                                        <div class="media-body align-self-center ml-2 text-truncate">
-                                            <h6 class="my-0 font-weight-normal text-dark">Your order is placed</h6>
-                                            <small class="text-muted mb-0">It is a long established fact that a reader.</small>
-                                        </div><!--end media-body-->
-                                    </div><!--end media-->
-                                </a><!--end-item-->
-                                <!-- item-->
-                                <a href="#" class="dropdown-item py-3">
-                                    <small class="float-right text-muted pl-2">2 hrs ago</small>
-                                    <div class="media">
-                                        <div class="avatar-md bg-info">
-                                            <i class="la la-check-circle text-white"></i>
-                                        </div>
-                                        <div class="media-body align-self-center ml-2 text-truncate">
-                                            <h6 class="my-0 font-weight-normal text-dark">Payment Successfull</h6>
-                                            <small class="text-muted mb-0">Dummy text of the printing.</small>
-                                        </div><!--end media-body-->
-                                    </div><!--end media-->
-                                </a><!--end-item-->
-                            </div>
-                            <!-- All-->
-                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
-                                View all <i class="fi-arrow-right"></i>
-                            </a>
-                        </div>
-                    </li>
-
                     <li class="dropdown">
                         <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="false" aria-expanded="false">
-                            <img src="../static/images/me.jpg" alt="profile-user" class="rounded-circle" />
+                            <img src="{{ url_for('static', filename='main-img/me.jpg') }}" alt="profile-user" class="rounded-circle" />
                             <span class="ml-1 nav-user-name hidden-sm">SevilAdmin <i class="mdi mdi-chevron-down"></i> </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
@@ -218,7 +129,7 @@
                     <li>
                         <a href="../crm/crm-index.html">
                             <span class="responsive-logo">
-                                <img src="../static/admin/images/logo-sm.png" alt="logo-small" class="logo-sm align-self-center" height="34">
+                                <img src="{{ url_for('static', filename='main-img/me.jpg') }}" alt="logo-small" class="logo-sm align-self-center" height="34">
                             </span>
                         </a>
                     </li>

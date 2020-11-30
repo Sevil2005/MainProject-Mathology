@@ -74,6 +74,13 @@
     transition: all 500ms ease;
 }
 
+.account-img {
+	height: 30px;
+	width: 30px;
+	margin-right: 20px;
+	margin-bottom: 16px;
+}
+
 /** banner-section **/
 
 .banner-section{

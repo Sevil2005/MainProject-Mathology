@@ -108,7 +108,7 @@
 
 .main-menu .navigation > li > a{
   position:relative;
-  display:block;
+  display:inline-flex;
   text-align:center;
   font-size:17px;
   line-height:30px;
@@ -125,7 +125,7 @@
   transition:all 500ms ease;
 }
 
-.main-menu .navigation > li > a:after{
+/* .main-menu .navigation > li > a:after{
   position: absolute;
   content: "\f107";
   font-family: 'Font Awesome 5 Free';
@@ -140,7 +140,7 @@
   cursor: pointer;
   z-index: 5;
   transition: all 500ms ease;
-}
+} */
 
 .main-menu .navigation > li.current > a,
 .main-menu .navigation > li:hover > a{

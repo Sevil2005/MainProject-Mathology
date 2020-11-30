@@ -21,6 +21,7 @@ def home():
 def about():
     return render_template('app/about.html', title='Haqqımızda')
 
+# Login-Register
 
 @app.route("/qeydiyyat", methods=['GET', 'POST'])
 def register():
@@ -61,7 +62,7 @@ def logout():
     return redirect(url_for('home'))
 
 
-def save_picture(form_picture):
+def save_picture_user(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
@@ -81,19 +82,24 @@ def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
-            picture_file = save_picture(form.picture.data)
+            picture_file = save_picture_user(form.picture.data)
             current_user.image_file = picture_file
         current_user.username = form.username.data
+        current_user.firstname = form.firstname.data
+        current_user.lastname = form.lastname.data
         current_user.email = form.email.data
         db.session.commit()
         flash('Hesab Məlumatlarınız Yeniləndi!', 'success')
         return redirect(url_for('account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
+        form.firstname.data = current_user.firstname
+        form.lastname.data = current_user.lastname
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('app/user/account.html', title='Hesabım', image_file=image_file, form=form)
 
+# Materials
 
 @app.route('/respublika-fənn-olimpiadası')
 def olympiads():
@@ -104,6 +110,7 @@ def olympiads():
 def materials():
     return render_template('app/international_olympiads.html', title="Beynəlxalq Olimpiadalar")
 
+# Blog
 
 @app.route('/məsləhət-bloqu')
 def blog():
@@ -116,7 +123,7 @@ def blog():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title = form.title.data, content = form.content.data, author = current_user )
+        post = Post(title = form.title.data, content = form.content.data, author = current_user)
         db.session.add(post)
         db.session.commit()
         flash('Yeni məqalə haqqında sorğu sistemə uğurla göndərildi!', 'success')
@@ -127,7 +134,7 @@ def new_post():
 @app.route("/məsləhət-bloqu/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('app/adviceBlog/single_post.html', title=post.title, post=post)
+    return render_template('app/adviceBlog/post_details.html', title=post.title, post=post)
 
 
 @app.route("/məsləhət-bloqu/<int:post_id>/redaktə-et", methods=['GET', 'POST'])

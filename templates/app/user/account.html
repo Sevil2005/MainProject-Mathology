@@ -29,8 +29,16 @@
                         <div class="col-lg-6 col-md-12 col-sm-12 content-column">
                             <div id="content_block_09">
                                 <div class="content-box">
-                                    <form method="POST" action="" novalidate id="contact-form" class="default-form"> 
+                                    <div class="media">
+                                        <img class="rounded-circle account-img" src="{{ image_file }}">
+                                        <div class="media-body">
+                                            <h2 class="account-heading">{{ current_user.username }}</h2>
+                                            <p class="text-secondary">{{ current_user.email }}</p>
+                                        </div>
+                                    </div>
+                                    <form method="POST" action="" novalidate enctype ="multipart/form-data" class="default-form"> 
                                         {{ form.hidden_tag() }}
+                                        <legend class="border-bottom mb-4">Hesab Məlumatları</legend>
                                         <div class="form-group">
                                             <label><i class="fa fa-user" style="display: inline;"></i>{{ form.firstname.label(style="display:inline;") }}</label>
                                             {% if form.firstname.errors %}
@@ -47,7 +55,7 @@
                                         <div class="form-group">
                                             <label><i class="fa fa-user" style="display: inline;"></i>{{ form.lastname.label(style="display:inline;") }}</label>
                                             {% if form.lastname.errors %}
-                                                {{ form.email(class="is-invalid") }}
+                                                {{ form.lastname(class="is-invalid") }}
                                                 <div class="invalid-feedback">
                                                     {% for error in form.lastname.errors %}
                                                         <span>{{ error }}</span>
@@ -55,6 +63,19 @@
                                                 </div>
                                             {% else %}
                                                 {{ form.lastname }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i class="fa fa-user" style="display: inline;"></i>{{ form.username.label(style="display:inline;") }}</label>
+                                            {% if form.username.errors %}
+                                                {{ form.username(class="is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.username.errors %}
+                                                        <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                {{ form.username }}
                                             {% endif %}
                                         </div>
                                         <div class="form-group">
@@ -71,38 +92,16 @@
                                             {% endif %}
                                         </div>
                                         <div class="form-group">
-                                            <label><i class="fa fa-lock" style="display: inline;"></i>{{ form.password.label(style="display: inline;") }}</label>
-                                            {% if form.password.errors %}
-                                                {{ form.password(class="is-invalid input-style") }}
-                                                <div class="invalid-feedback">
-                                                    {% for error in form.password.errors %}
-                                                        <span>{{ error }}</span>
-                                                    {% endfor %}
-                                                </div>
-                                            {% else %}
-                                                {{ form.password(class="input-style") }}
+                                            <label><i class="fa fa-picture" style="display: inline;"></i>{{ form.picture.label(style="display:inline;") }}</label>
+                                            {{ form.picture }}
+                                            {% if form.picture.errors %}
+                                                {% for error in form.picture.errors %}
+                                                    <span class="text-danger">{{ error }}</span></br>
+                                                {% endfor %}
                                             {% endif %}
                                         </div>
-                                        <div class="form-group">
-                                            <label><i class="fa fa-lock" style="display: inline;"></i>{{ form.confirm_password.label(style="display: inline;") }}</label>
-                                            {% if form.confirm_password.errors %}
-                                                {{ form.confirm_password(class="is-invalid input-style") }}
-                                                <div class="invalid-feedback">
-                                                    {% for error in form.confirm_password.errors %}
-                                                        <span>{{ error }}</span>
-                                                    {% endfor %}
-                                                </div>
-                                            {% else %}
-                                                {{ form.confirm_password(class="input-style") }}
-                                            {% endif %}
-                                        </div>
-                                        <div class="form-group">
-                                            {{ form.submit(class="theme-btn style-seven") }}
-                                        </div>
-                                        <div class="border-top pt-3">
-                                            <small class="text-muted">
-                                                <h6 style="display: inline;">Artıq Bir Hesabınız Var? </h6><a class="ml-2" href="{{ url_for('register') }}"><h6 style="display: inline;">Daxil Ol</h6></a>
-                                            </small>
+                                        <div class="form-group mt-15">
+                                            {{ form.submit(class="theme-btn style-six") }}
                                         </div>
                                     </form>
                                 </div>
@@ -113,65 +112,9 @@
                                 <figure class="image js-tilt"><img src="static/assets/images/resource/illastration-6.png" alt=""></figure>
                             </div>
                         </div>
-        
                     </div>
                 </div>
             </section>
         <!-- contact-section end -->
 
-        <div class="container content-section">
-            <div class="media">
-                <img class="rounded-circle account-img" src="{{ image_file }}">
-                <div class="media-body">
-                    <h2 class="account-heading">{{ current_user.username }}</h2>
-                    <p class="text-secondary">{{ current_user.email }}</p>
-                </div>
-            </div>
-
-            <form method="POST" action="" novalidate enctype ="multipart/form-data">
-                {{ form.hidden_tag() }}
-                <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">Hesab Məlumatları</legend>
-                    <div class="form-group">
-                        {{ form.username.label(class="form-control-label") }}
-
-                        {% if form.username.errors %}
-                            {{ form.username(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.username.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.username(class="form-control form-control-lg") }}
-                        {% endif %}
-                    </div>
-                    <div class="form-group">
-                        {{ form.email.label(class="form-control-label") }}
-                        {% if form.email.errors %}
-                            {{ form.email(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.email.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.email(class="form-control form-control-lg") }}
-                        {% endif %}
-                    </div>
-                    <div class="form-group">
-                        {{ form.picture.label() }}
-                        {{ form.picture(class="form-control-file") }}
-                        {% if form.picture.errors %}
-                            {% for error in form.picture.errors %}
-                                <span class="text-danger">{{ error }}</span></br>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </fieldset>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-outline-info") }}
-                </div>
-            </form>
-        </div>
 {% endblock content %}

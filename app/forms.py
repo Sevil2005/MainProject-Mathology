@@ -41,10 +41,10 @@ class UpdateAccountForm(FlaskForm):
     firstname = StringField('Ad', validators=[DataRequired(), Length(min=2, max=20)])
     lastname = StringField('Soyad', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    birthday = DateField('Doğum Tarixi', format='%Y-%m-%d', validators=[DataRequired()])
-    school = StringField('Təhsil Aldığınız Məktəb', validators=[Length(min=1, max=100)])
-    grade = SelectField(u'Təhsil pilləsi', choices  = [('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10'), ('11', '11')], coerce=int)
-    experience = TextAreaField('Riyaziyyat Olimpiadalarında Edindiyiniz Təcrübələr')
+    # birthday = DateField('Doğum Tarixi', format='%Y-%m-%d', validators=[DataRequired()])
+    # school = StringField('Təhsil Aldığınız Məktəb', validators=[Length(min=1, max=100)])
+    # grade = SelectField(u'Təhsil pilləsi', choices  = [('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10'), ('11', '11')], coerce=int)
+    # experience = TextAreaField('Riyaziyyat Olimpiadalarında Edindiyiniz Təcrübələr')
     picture = FileField('Profil şəklini yenilə', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Yenilə')
 
@@ -65,5 +65,5 @@ class UpdateAccountForm(FlaskForm):
 
 class PostForm(FlaskForm):
     title = StringField('Başlıq', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Başlığı"})
-    content = TextAreaField('Məqalənin Detalları', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Mətnini Bura Yazın..."})
+    content = TextAreaField('Məqalənin Detalları', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Mətnini Bura Yazın...", "id": "textarea"})
     submit = SubmitField('Məqaləni Paylaşmaq Üçün Bizə Sorğu Göndər', render_kw={"style": "width:100%;"})

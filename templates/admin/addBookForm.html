@@ -1,0 +1,26 @@
+{% extends "admin/starter.html" %}
+{% block main %}
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.name }}</td>
+            <td>{{ book.description }}</td>
+            <td>{{ book.category }}</td>
+            <td>
+                <a><button><i class="fa fa-edit"></i></button></a>
+                <a href="{{url_for('delete', id = book.id)}}"><button><i class="fa fa-trash"></i></button></a>
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

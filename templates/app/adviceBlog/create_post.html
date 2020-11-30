@@ -45,14 +45,14 @@
                                         <div class="form-group">
                                             <label><i class="fas fa-text-height" style="display: inline;"></i>{{ form.content.label(style="display: inline;") }}</label>
                                             {% if form.content.errors %}
-                                                {{ form.content(class="is-invalid input-style") }}
+                                                {{ form.content }}
                                                 <div class="invalid-feedback">
                                                     {% for error in form.content.errors %}
                                                         <span>{{ error }}</span>
                                                     {% endfor %}
                                                 </div>
                                             {% else %}
-                                                {{ form.content(class="input-style") }}
+                                                {{ form.content }}
                                             {% endif %}
                                         </div>
                                         <div class="form-group">

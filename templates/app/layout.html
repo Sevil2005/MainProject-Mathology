@@ -33,6 +33,10 @@
         <link href="{{ url_for('static', filename='assets/css/color.css') }}" rel="stylesheet">
         <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
         <link href="{{ url_for('static', filename='assets/css/responsive.css') }}" rel="stylesheet">
+
+        <!-- include summernote css/js -->
+        <link href="{{ url_for('static', filename='assets/summernote/summernote.min.css') }}" rel="stylesheet">
+
     </head>
 
 
@@ -130,8 +134,8 @@
                                         <li class="dropdown">
                                             <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                                                 aria-haspopup="false" aria-expanded="false">
-                                                <img src="url_for('static', filename='profile_pics/' + current_user.image_file)" alt="profile-user" class="rounded-circle" />
-                                                <span class="ml-1 nav-user-name hidden-sm">{{ current_user.username }} <i class="mdi mdi-chevron-down"></i> </span>
+                                                <img class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" alt="profile-user" class="rounded-circle" />
+                                                <span>{{ current_user.username }}</span>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item" href="{{ url_for('account') }}"><i data-feather="user" class="align-self-center menu-icon icon-dual" style="display: inline;"></i><h6 style="display: inline;">Hesabım</h6></a>
@@ -146,7 +150,6 @@
                         </div>
                     </div>
                     <div class="right-column pull-right clearfix">
-                        <div class="btn-box"><a href="index-3.html" class="theme-btn style-six">Əlaqə Saxla</a></div>
                         <ul class="social-links clearfix">
                             <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
                             <li><a href="#"><i class="fab fa-twitter"></i></a></li>
@@ -168,7 +171,6 @@
                         </div>
                     </div>
                     <div class="right-column pull-right clearfix">
-                        <div class="btn-box"><a href="#" class="theme-btn style-six">Əlaqə Saxla</a></div>
                         <ul class="social-links clearfix">
                             <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
                             <li><a href=""><i class="fab fa-twitter"></i></a></li>
@@ -301,8 +303,10 @@
     <script src="{{ url_for('static', filename='assets/js/jquery.countTo.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/scrollbar.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/tilt.jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/app.js') }}"></script>
 
     <!-- main-js -->
+    <script src="{{ url_for('static', filename='assets/summernote/summernote.min.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
 
     </body><!-- End of .page_wrapper -->
