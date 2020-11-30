@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import User, Post
+from app.models import User, Post, book
 from flask import render_template, url_for, redirect
 
 
@@ -21,9 +21,14 @@ def delete(id):
 
 
 @app.route('/add-book')
-def addBookForm():
-    books = Book.query.all()
-    return render_template('/admin/addBookForm.html', books=books)
+def bookTable():
+    books = book.query.all()
+    return render_template('/admin/bookTable.html', books=books)
+
+@app.route('/add-book/new')
+def bookAddForm():
+    books = book.query.all()
+    return render_template('/admin/bookAddForm.html', books=books)
 
 @app.route('/advice-articles')
 def adviceForm():
