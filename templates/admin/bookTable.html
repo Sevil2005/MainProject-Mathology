@@ -25,4 +25,23 @@
         </tr>
     {% endfor %}
 </table>
+<h4>Kitab Kateqoriyaları</h4>
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>
+                <a><button><i class="fa fa-edit"></i></button></a>
+                <a href="{{url_for('delete', id = category.id)}}"><button><i class="fa fa-trash"></i></button></a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
 {% endblock %}

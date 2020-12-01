@@ -1,18 +1,19 @@
 from app import app, db
-from app.models import User, Post, book
+from app.models import User, Post, book, category
 from flask import render_template, url_for, redirect
+from app.forms import BookForm
 
 
 @app.route('/admin')
 def admin_index():
     return render_template('/admin/starter.html')
 
-@app.route('/admin/students')
+@app.route('/admin/tələbələr')
 def students():
     users = User.query.all()
     return render_template('/admin/students.html', users=users)
 
-@app.route('/admin/students/delete/<int:id>/', methods = ['GET'])
+@app.route('/admin/tələbələr/sil/<int:id>/', methods = ['GET'])
 def delete(id):
     selectedPerson = User.query.get(id)
     db.session.delete(selectedPerson)
@@ -20,15 +21,22 @@ def delete(id):
     return redirect(url_for("students"))
 
 
-@app.route('/add-book')
+@app.route('/kitab-əlavə-et')
 def bookTable():
     books = book.query.all()
-    return render_template('/admin/bookTable.html', books=books)
+    categories = category.query.all()
+    return render_template('/admin/bookTable.html', books=books, categories=categories)
 
-@app.route('/add-book/new')
+@app.route('/kitab-əlavə-et/yeni', methods=['GET', 'POST'])
 def bookAddForm():
-    books = book.query.all()
-    return render_template('/admin/bookAddForm.html', books=books)
+    categories = category.query.all()
+    form = BookForm()
+    if form.validate_on_submit():
+        new_book = book(name = form.name.data, description = form.description.data, url = form.url.data, category = form.category.data)
+        db.session.add(new_book)
+        db.session.commit()
+        return redirect(url_for('bookTable'))
+    return render_template('/admin/bookAddForm.html', categories=categories, form=form)
 
 @app.route('/advice-articles')
 def adviceForm():

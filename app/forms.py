@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, DateField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app.models import User
+from app.models import User, category
 
 
 class RegistrationForm(FlaskForm):
@@ -67,3 +67,10 @@ class PostForm(FlaskForm):
     title = StringField('Başlıq', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Başlığı"})
     content = TextAreaField('Məqalənin Detalları', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Mətnini Bura Yazın...", "id": "textarea"})
     submit = SubmitField('Məqaləni Paylaşmaq Üçün Bizə Sorğu Göndər', render_kw={"style": "width:100%;"})
+
+class BookForm(FlaskForm):
+    name = StringField('Adı', validators=[DataRequired()])
+    description = TextAreaField('Kitabın Təsviri', validators=[DataRequired()])
+    url = TextAreaField('Kitabın Linki', validators=[DataRequired()])
+    category = SelectField('Kitabın Kateqoriyası', choices = [(c.id, c.name) for c in category.query.all()])
+    submit = SubmitField('Kitabı Əlavə Et')
