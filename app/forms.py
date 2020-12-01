@@ -74,3 +74,7 @@ class BookForm(FlaskForm):
     url = TextAreaField('Kitabın Linki', validators=[DataRequired()])
     category = SelectField('Kitabın Kateqoriyası', choices = [(c.id, c.name) for c in category.query.all()])
     submit = SubmitField('Kitabı Əlavə Et')
+
+class CatForm(FlaskForm):
+    name = StringField('Adı', validators=[DataRequired()])
+    submit = SubmitField('Kateqoriya Əlavə Et')

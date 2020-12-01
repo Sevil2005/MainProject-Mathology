@@ -1,7 +1,7 @@
 from app import app, db
 from app.models import User, Post, book, category
 from flask import render_template, url_for, redirect
-from app.forms import BookForm
+from app.forms import BookForm, CatForm
 
 
 @app.route('/admin')
@@ -32,11 +32,24 @@ def bookAddForm():
     categories = category.query.all()
     form = BookForm()
     if form.validate_on_submit():
-        new_book = book(name = form.name.data, description = form.description.data, url = form.url.data, category = form.category.data)
+        cat = form.category.data
+        catObj = category.query.filter_by(id = cat).first()
+        new_book = book(name = form.name.data, description = form.description.data, url = form.url.data, category = catObj)
         db.session.add(new_book)
         db.session.commit()
         return redirect(url_for('bookTable'))
     return render_template('/admin/bookAddForm.html', categories=categories, form=form)
+
+@app.route('/kateqoriya-əlavə-et/yeni', methods=['GET', 'POST'])
+def addCategory():
+    form = CatForm()
+    if form.validate_on_submit():
+        new_cat = category(name = form.name.data)
+        db.session.add(new_cat)
+        db.session.commit()
+        return redirect(url_for('bookTable'))
+    return render_template('/admin/addCategory.html', form=form)
+
 
 @app.route('/advice-articles')
 def adviceForm():
