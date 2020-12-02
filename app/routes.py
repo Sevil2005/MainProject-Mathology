@@ -4,7 +4,7 @@ import secrets
 from flask import render_template, url_for, flash, redirect, request, abort
 from app import app, db, bcrypt
 from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
-from app.models import User, Post
+from app.models import User, Post, book, category
 from flask_login import login_user, current_user, logout_user, login_required
 from PIL import Image
 
@@ -99,16 +99,6 @@ def account():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('app/user/account.html', title='Hesabım', image_file=image_file, form=form)
 
-# Materials
-
-@app.route('/respublika-fənn-olimpiadası')
-def olympiads():
-    return render_template('app/national_olympiads.html', title="Respublika Fənn Olimpiadası")
-
-
-@app.route('/beynəlxalq-olimpiadalar')
-def materials():
-    return render_template('app/international_olympiads.html', title="Beynəlxalq Olimpiadalar")
 
 # Blog
 
@@ -172,3 +162,11 @@ def user_posts(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(author=user).order_by(Post.date_posted.desc())
     return render_template('app/adviceBlog/user_posts.html', posts=posts, user=user)
+
+# Books
+
+@app.route('/respublika-fənn-olimpiadası/<int:id>')
+def olympiads(id):
+    books = book.query.filter_by(category_id=id)
+    cat = category.query.filter_by(id=id).first()
+    return render_template('app/books/book.html', title=cat.name, books=books)

@@ -88,7 +88,7 @@
                 <div class="outer-box clearfix">
                     <div class="left-column pull-left clearfix">
                         <div class="logo-box pull-left">
-                            <figure class="logo"><a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='assets/images/logo-3.png') }}" alt="logo"></a></figure>
+                            <figure class="logo"><a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='assets/images/logo-mathology.png') }}" alt="logo"></a></figure>
                         </div>
                         <div class="menu-area pull-right clearfix">
                             <!--Mobile Navigation Toggler-->
@@ -102,30 +102,30 @@
                                     <ul class="navigation clearfix">
                                         <li class="current dropdown"><a href="{{ url_for('home') }}">Ana Səhifə</a></li> 
                                         <li class="dropdown"><a href="{{ url_for('about') }}">Haqqımızda</a></li>
-                                        <li class="dropdown"><a href="#">Respublika Fənn Olimpiadaları</a>
+                                        <li class="dropdown"><a href="#">Respublika Fənn Olimpiadası</a>
                                             <ul>
                                                 <li class="dropdown"><a href="#">Sualları</a>
                                                 <ul>
-                                                    <li><a href="#">I mərhələ<i class="flaticon-next"></i></a></li>
-                                                    <li><a href="#">II mərhələ<i class="flaticon-next"></i></a></li>
-                                                    <li><a href="#">III mərhələ(Final)<i class="flaticon-next"></i></a></li>
+                                                    <li><a href="{{ url_for('olympiads', id = 1) }}">I mərhələ<i class="flaticon-next"></i></a></li>
+                                                    <li><a href="{{ url_for('olympiads', id = 2) }}">II mərhələ<i class="flaticon-next"></i></a></li>
+                                                    <li><a href="{{ url_for('olympiads', id = 3) }}">III mərhələ(Final)<i class="flaticon-next"></i></a></li>
                                                 </ul>
                                             </li>
-                                                <li><a href="service-details.html">Tövsiyə Etdiyimiz Materiallar<i class="flaticon-next"></i></a></li>
+                                                <li><a href="{{ url_for('olympiads', id = 9) }}">Tövsiyə Etdiyimiz Materiallar<i class="flaticon-next"></i></a></li>
                                             </ul>
                                         </li>
                                         <li class="dropdown"><a href="#">Beynəlxalq Olimpiadalar</a>
                                             <ul>
                                                 <li class="dropdown"><a href="#">Olimpiadalar</a>
                                                     <ul>
-                                                        <li><a href="#">JBMO<i class="flaticon-next"></i></a></li>
-                                                        <li><a href="#">IZHO<i class="flaticon-next"></i></a></li>
-                                                        <li><a href="#">BMO<i class="flaticon-next"></i></a></li>
-                                                        <li><a href="#">EGMO<i class="flaticon-next"></i></a></li>
-                                                        <li><a href="#">IMO<i class="flaticon-next"></i></a></li>
+                                                        <li><a href="{{ url_for('olympiads', id = 4) }}">JBMO<i class="flaticon-next"></i></a></li>
+                                                        <li><a href="{{ url_for('olympiads', id = 5) }}">IZHO<i class="flaticon-next"></i></a></li>
+                                                        <li><a href="{{ url_for('olympiads', id = 6) }}">BMO<i class="flaticon-next"></i></a></li>
+                                                        <li><a href="{{ url_for('olympiads', id = 7) }}">EGMO<i class="flaticon-next"></i></a></li>
+                                                        <li><a href="{{ url_for('olympiads', id = 8) }}">IMO<i class="flaticon-next"></i></a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="#">Tövsiyə Etdiyimiz Materiallar<i class="flaticon-next"></i></a></li>
+                                                <li><a href="{{ url_for('olympiads', id = 10) }}">Tövsiyə Etdiyimiz Materiallar<i class="flaticon-next"></i></a></li>
                                             </ul>
                                         </li>
                                         <li class="dropdown"><a href="{{ url_for('blog') }}">Məsləhət Bloqu</a>

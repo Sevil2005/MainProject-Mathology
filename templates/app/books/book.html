@@ -1,0 +1,40 @@
+{% extends "app/layout.html" %}
+{% block content %}
+    <!--Page Title-->
+        <section class="page-title text-center style-two">
+            <div class="pattern-layer" style="background-image: url({{ url_for('static', filename='assets/images/shape/shape-62.png') }})"></div>
+            <div class="auto-container">
+                <div class="content-box">
+                    <h1>{{ title }}</h1>
+                </div>
+            </div>
+        </section>
+    <!--End Page Title-->
+    <!-- case-style-two -->
+    <section class="case-style-two">
+        <div class="auto-container">
+            <div class="three-item-carousel owl-carousel owl-theme owl-nav-none owl-dots-none">
+                {% for single_book in books %}
+                    <div class="case-block-two">
+                        <div class="inner-box">
+                            <figure class="image-box">
+                                <img src="{{ url_for('static', filename='assets/images/gallery/gallery-1.jpg') }}" alt="">
+                                <div class="link"><a href="{{ single_book.url }}"><i class="flaticon-hyperlink"></i></a></div>
+                                <div class="overlay-layer"></div>
+                            </figure>
+                            <div class="lower-content">
+                                <div class="box">
+                                    <div class="icon-box"><i class="flaticon-vision"></i></div>
+                                    <h3>{{ single_book.name }}</h3>
+                                    <p>{{ single_book.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- case-style-two end -->
+
+{% endblock %}
