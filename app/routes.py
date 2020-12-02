@@ -165,7 +165,7 @@ def user_posts(username):
 
 # Books
 
-@app.route('/respublika-fənn-olimpiadası/<int:id>')
+@app.route('/olimpiadalar/<int:id>')
 def olympiads(id):
     books = book.query.filter_by(category_id=id)
     cat = category.query.filter_by(id=id).first()
