@@ -29,17 +29,16 @@
                         <div class="col-lg-6 col-md-12 col-sm-12 content-column">
                             <div id="content_block_09">
                                 <div class="content-box">
-                                    <div class="media">
-                                        <img class="rounded-circle account-img" src="{{ image_file }}">
-                                        <div class="media-body">
-                                            <h2 class="account-heading">{{ current_user.username }}</h2>
-                                            <p class="text-secondary">{{ current_user.email }}</p>
+                                    <form method="POST" action="" novalidate enctype ="multipart/form-data" class="default-form" id="contact-form"> 
+                                        <div class="media" style="display:inline-block !important;">
+                                            <img class="rounded-circle" src="{{ image_file }}" style="display: inline-block; vertical-align: middle;">
+                                            <div class="media-body" style="display: inline-block; vertical-align: middle;">
+                                                <h2 class="account-heading">{{ current_user.username }}</h2>
+                                                <p class="text-secondary">{{ current_user.email }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <form method="POST" action="" novalidate enctype ="multipart/form-data" class="default-form"> 
                                         {{ form.hidden_tag() }}
-                                        <legend class="border-bottom mb-4">Hesab Məlumatları</legend>
-                                        <div class="form-group">
+                                        <div class="form-group mt-50">
                                             <label><i class="fa fa-user" style="display: inline;"></i>{{ form.firstname.label(style="display:inline;") }}</label>
                                             {% if form.firstname.errors %}
                                                 {{ form.firstname(class="is-invalid") }}

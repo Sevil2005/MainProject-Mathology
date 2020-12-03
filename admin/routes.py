@@ -147,8 +147,9 @@ def delete_cat(id):
 
 @app.route('/advice-articles')
 @login_required
-def adviceForm():
+def postsTable():
     if User.query.get(1) == current_user:
-        return render_template('/admin/adviceForm.html')
+        posts = Post.query.all()
+        return render_template('/admin/postsTable.html', posts=posts)
     else:
         abort(403)    
