@@ -1,7 +1,7 @@
 from app import app, db
 from app.models import User, Post, book, category
 from flask import render_template, url_for, redirect, request, abort
-from app.forms import BookForm, CatForm
+from app.forms import BookForm, CatForm, PostForm
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -145,7 +145,7 @@ def delete_cat(id):
 
 # Advice Blog
 
-@app.route('/advice-articles')
+@app.route('/admin/məsləhət-bloqu')
 @login_required
 def postsTable():
     if User.query.get(1) == current_user:
@@ -153,3 +153,32 @@ def postsTable():
         return render_template('/admin/postsTable.html', posts=posts)
     else:
         abort(403)    
+
+@app.route('/admin/məsləhət-bloqu/post-redaktə-et/<int:id>', methods = ['GET', 'POST'])
+@login_required
+def edit_post(id):
+    if User.query.get(1) == current_user:
+        selectedPost = Post.query.get_or_404(id)
+        form = PostForm()
+        if form.validate_on_submit():
+            selectedPost.title = form.title.data
+            selectedPost.content = form.content.data
+            db.session.commit()
+            return redirect(url_for('postsTable'))
+        elif request.method =='GET':
+            form.title.data = selectedPost.title
+            form.content.data = selectedPost.content
+        return render_template('/app/adviceBlog/create_post.html', form=form)
+    else:
+        abort(403)
+
+@app.route('/admin/kitablar/post-sil/<int:id>', methods = ['GET'])
+@login_required
+def delete_post_admin(id):
+    if User.query.get(1) == current_user:
+        selectedPost = Post.query.get(id)
+        db.session.delete(selectedPost)
+        db.session.commit()
+        return redirect(url_for("postsTable"))
+    else:
+        abort(403)

@@ -26,8 +26,8 @@
                                                         <td>{{ post.date_posted }}</td>
                                                         <td>{{ post.user_id }}</td>
                                                         <td>
-                                                            <a href="{{url_for('edit_book', id = post.id)}}" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
-                                                            <a href="{{url_for('delete_book', id = post.id)}}"><i class="fas fa-trash-alt text-danger font-16"></i></a>                                                        
+                                                            <a href="{{url_for('edit_post', id = post.id)}}" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
+                                                            <a href="{{url_for('delete_post_admin', id = post.id)}}"><i class="fas fa-trash-alt text-danger font-16"></i></a>                                                        
                                                         </td>
                                                         <td>
                                                             <div class="custom-control custom-switch">

@@ -45,7 +45,7 @@
                                             <h4><a href="blog-details.html">{{ post.title }}</a></h4>
                                         </div>
                                         <div class="text">
-                                            <p>{{ post.content }}</p>
+                                            <p>{{ post.content|safe }}</p>
                                         </div>
                                         <div class="link"><a href="{{ url_for('post', post_id= post.id) }}"><i class="flaticon-next"></i>Ətraflı Oxu</a></div>
                                     </div>
