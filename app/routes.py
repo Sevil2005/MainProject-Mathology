@@ -63,21 +63,6 @@ def logout():
     return redirect(url_for('home'))
 
 
-def save_picture_user(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    path = os.path.dirname(app.instance_path)
-    picture_path = os.path.join(path, 'static/profile_pics', picture_fn)
-
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-
-    return picture_fn
-
-
 @app.route("/hesabım", methods=['GET', 'POST'])
 @login_required
 def account():
