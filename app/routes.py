@@ -7,10 +7,11 @@ from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from app.models import User, Post, book, category
 from flask_login import login_user, current_user, logout_user, login_required
 from PIL import Image
+from werkzeug.utils import secure_filename
 
 EMAIL_ADDRESS = os.environ.get('EMAIL_USER')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASS')
-
+app.config['UPLOAD_PATH'] = 'static/profile_pics'
 
 @app.route('/')
 @app.route('/ana-səhifə')
@@ -83,8 +84,10 @@ def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
-            picture_file = save_picture_user(form.picture.data)
-            current_user.image_file = picture_file
+            uploaded_file = request.files['picture']
+            filename = secure_filename(uploaded_file.filename)
+            uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+            current_user.image_file = filename
         current_user.username = form.username.data
         current_user.firstname = form.firstname.data
         current_user.lastname = form.lastname.data
