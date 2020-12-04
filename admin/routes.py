@@ -37,7 +37,7 @@ def delete_student(id):
 
 #Books
 
-@app.route('/kitablar')
+@app.route('/admin/kitablar')
 @login_required
 def bookTable():
     if User.query.get(1) == current_user:
@@ -47,7 +47,7 @@ def bookTable():
     else:
         abort(403)
 
-@app.route('/kitablar/əlavə-et', methods=['GET', 'POST'])
+@app.route('/admin/kitablar/əlavə-et', methods=['GET', 'POST'])
 @login_required
 def bookAddForm():
     if User.query.get(1) == current_user:
@@ -102,7 +102,7 @@ def delete_book(id):
 
 #Categories
 
-@app.route('/kateqoriya-əlavə-et/yeni', methods=['GET', 'POST'])
+@app.route('/admin/kateqoriya-əlavə-et/yeni', methods=['GET', 'POST'])
 @login_required
 def addCategory():
     if User.query.get(1) == current_user:
