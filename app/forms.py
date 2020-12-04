@@ -65,8 +65,9 @@ class UpdateAccountForm(FlaskForm):
 
 class PostForm(FlaskForm):
     title = StringField('Başlıq', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Başlığı"})
+    post_img = FileField('Məqaləni Təsvir edən Əsas Şəkili Əlavə Et', validators=[FileAllowed(['jpg', 'png'])])
     content = TextAreaField('Məqalənin Detalları', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Mətnini Bura Yazın...", "id": "textarea"})
-    submit = SubmitField('Məqaləni Paylaşmaq Üçün Bizə Sorğu Göndər', render_kw={"style": "width:100%;"})
+    submit = SubmitField('Məqaləni Paylaş', render_kw={"style": "width:100%;"})
 
 class BookForm(FlaskForm):
     name = StringField('Adı', validators=[DataRequired()])

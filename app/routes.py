@@ -11,7 +11,8 @@ from werkzeug.utils import secure_filename
 
 EMAIL_ADDRESS = os.environ.get('EMAIL_USER')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASS')
-app.config['UPLOAD_PATH'] = 'static/profile_pics'
+app.config['UPLOAD_PATH_ACCOUNT'] = 'static/profile_pics'
+app.config['UPLOAD_PATH_POST'] = 'static/post_imgs'
 
 @app.route('/')
 @app.route('/ana-səhifə')
@@ -71,7 +72,7 @@ def account():
         if form.picture.data:
             uploaded_file = request.files['picture']
             filename = secure_filename(uploaded_file.filename)
-            uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+            uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_ACCOUNT'], filename))
             current_user.image_file = filename
         current_user.username = form.username.data
         current_user.firstname = form.firstname.data
@@ -102,11 +103,16 @@ def blog():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title = form.title.data, content = form.content.data, author = current_user)
+        uploaded_file = request.files['post_img']
+        filename = secure_filename(uploaded_file.filename)
+        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_POST'], filename))
+
+        post = Post(title = form.title.data, content = form.content.data, author = current_user, post_img = filename)
         db.session.add(post)
         db.session.commit()
         flash('Yeni məqalə haqqında sorğu sistemə uğurla göndərildi!', 'success')
         return redirect(url_for('blog'))
+    
     return render_template('app/adviceBlog/create_post.html', title="Yeni Məqalə", form=form)
 
 
@@ -124,6 +130,11 @@ def update_post(post_id):
         abort(403)
     form = PostForm()
     if form.validate_on_submit():
+        if form.post_img.data:
+            uploaded_file = request.files['post_img']
+            filename = secure_filename(uploaded_file.filename)
+            uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_POST'], filename))
+            post.post_img = filename
         post.title = form.title.data
         post.content = form.content.data
         db.session.commit()

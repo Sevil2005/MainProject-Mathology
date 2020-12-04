@@ -35,8 +35,8 @@
                             <div class="news-block-one wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
                                 <div class="inner-box">
                                     <figure class="image-box">
-                                        <img src="static/assets/images/news/news-1.jpg" alt="">
-                                        <a href="static/assets/images/news/news-1.jpg" class="lightbox-image" data-fancybox="gallery"><i class="flaticon-zoom"></i></a>
+                                        <img src="{{ url_for('static', filename='post_imgs/') + post.post_img }}" alt="" style="height:250px; width:370px; object-fit: cover;">
+                                        <a href="{{ url_for('static', filename='post_imgs/') + post.post_img }}" class="lightbox-image" data-fancybox="gallery"><i class="flaticon-zoom"></i></a>
                                     </figure>
                                     <div class="lower-content">
                                         <div class="file-box" style="display:inline-flex;"><i class="fa fa-feather"></i><p><h6>{{ post.author.username }}<h6></p></div>
