@@ -2,12 +2,13 @@ import os
 import smtplib
 import secrets
 from flask import render_template, url_for, flash, redirect, request, abort
-from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from app import app, db, bcrypt, mail
+from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm
 from app.models import User, Post, book, category
 from flask_login import login_user, current_user, logout_user, login_required
 from PIL import Image
 from werkzeug.utils import secure_filename
+from flask_mail import Message
 
 EMAIL_ADDRESS = os.environ.get('EMAIL_USER')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASS')
@@ -170,3 +171,45 @@ def olympiads(id):
     books = book.query.filter_by(category_id=id)
     cat = category.query.filter_by(id=id).first()
     return render_template('app/books/book.html', title=cat.name, books=books)
+
+# Reset Password
+
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message('Şifrə Yeniləmə Sorğusu', sender='mathology.edu.az@gmail.com', recipients=[user.email])
+    msg.body = f'''Şifrənizi yeniləmək üçün aşağıdakı linkə daxil ola bilərsiz:
+{url_for('reset_token', token=token, _external=True)}
+Əgər siz belə bir sorğu göndərməmisinizsə narahat olmayın, bu maili silə bilərsiz, hesabınızla bağlı heç bir dəyişiklik edilməyəcək.
+'''
+    mail.send(msg)
+
+
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash('Email ünvanınıza şifrə yeniləməsi üçün link göndərildi.', 'info')
+        return redirect(url_for('login'))
+    return render_template('app/user/reset_request.html', title='Şifrəni Yeniləmək Üçün Sorğu Göndər', form=form)
+
+
+@app.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('reset_request'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        flash('Şifrəniz yeniləndi! İndi hesabınıza daxil ola bilərsiniz.', 'success')
+        return redirect(url_for('login'))
+    return render_template('app/user/reset_token.html', title='Şifrəni Yenilə', form=form)
