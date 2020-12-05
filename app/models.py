@@ -14,11 +14,10 @@ class User(db.Model, UserMixin):
     lastname = db.Column(db.String(20), nullable=False)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.png')
+    image_file = db.Column(db.String(20), nullable=False, default='default3.jpg')
     # birthday = db.Column(db.DateTime, nullable=True)
     # school = db.Column(db.String(100), nullable=True)
     # grade = db.Column(db.String(5), nullable=True)
-    # experience = db.Column(db.Text, nullable=True)
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
 
@@ -42,3 +41,4 @@ class book(db.Model):
     description = db.Column(db.Text, nullable=False)
     url = db.Column(db.Text)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
+    book_img = db.Column(db.String(20), nullable=False)

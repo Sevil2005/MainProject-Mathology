@@ -74,6 +74,7 @@ class BookForm(FlaskForm):
     description = TextAreaField('Kitabın Təsviri', validators=[DataRequired()])
     url = TextAreaField('Kitabın Linki', validators=[DataRequired()])
     category = SelectField('Kitabın Kateqoriyası', choices = [(c.id, c.name) for c in category.query.all()])
+    book_img = FileField('Kitabın Şəklini Əlavə Et', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Kitabı Əlavə Et')
 
 class CatForm(FlaskForm):

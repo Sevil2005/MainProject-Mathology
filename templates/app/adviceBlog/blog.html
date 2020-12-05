@@ -42,7 +42,7 @@
                                         <div class="file-box" style="display:inline-flex;"><i class="fa fa-feather"></i><p><h6>{{ post.author.username }}<h6></p></div>
                                         <div class="title-box">
                                             <div class="post-date"><p>{{ post.date_posted.strftime('%d') }}</p><span>{{ post.date_posted.strftime('%b') }}</span></div>
-                                            <h4><a href="blog-details.html">{{ post.title }}</a></h4>
+                                            <h4>{{ post.title }}</h4>
                                         </div>
                                         <div class="link"><a href="{{ url_for('post', post_id= post.id) }}"><i class="flaticon-next"></i>Ətraflı Oxu</a></div>
                                     </div>
