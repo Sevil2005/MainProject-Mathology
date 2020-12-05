@@ -62,6 +62,14 @@
 
 ***/
 
+#content_block_09 .content-box #contact-form .form-group textarea {
+	display: none !important;
+}
+
+.note-editor.note-airframe .note-editing-area .note-editable, .note-editor.note-frame .note-editing-area .note-editable {
+    height: 500px;
+}
+
 .input-style{
 	position: relative;
     width: 100%;
@@ -75,9 +83,8 @@
 }
 
 .account-img {
-	height: 30px;
-	width: 30px;
-	margin-bottom: 16px;
+	height: 45px;
+	width: 46px;
 }
 
 /** banner-section **/

@@ -65,16 +65,37 @@ class UpdateAccountForm(FlaskForm):
 
 class PostForm(FlaskForm):
     title = StringField('Başlıq', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Başlığı"})
+    post_img = FileField('Məqaləni Təsvir edən Əsas Şəkili Əlavə Et', validators=[FileAllowed(['jpg', 'png'])])
     content = TextAreaField('Məqalənin Detalları', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Mətnini Bura Yazın...", "id": "textarea"})
-    submit = SubmitField('Məqaləni Paylaşmaq Üçün Bizə Sorğu Göndər', render_kw={"style": "width:100%;"})
+    submit = SubmitField('Məqaləni Paylaş', render_kw={"style": "width:100%;"})
+
 
 class BookForm(FlaskForm):
     name = StringField('Adı', validators=[DataRequired()])
     description = TextAreaField('Kitabın Təsviri', validators=[DataRequired()])
     url = TextAreaField('Kitabın Linki', validators=[DataRequired()])
     category = SelectField('Kitabın Kateqoriyası', choices = [(c.id, c.name) for c in category.query.all()])
+    book_img = FileField('Kitabın Şəklini Əlavə Et', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Kitabı Əlavə Et')
+
 
 class CatForm(FlaskForm):
     name = StringField('Adı', validators=[DataRequired()])
     submit = SubmitField('Kateqoriya Əlavə Et')
+
+
+class RequestResetForm(FlaskForm):
+    email = StringField('Email Ünvanı', validators=[DataRequired(), Email()])
+    submit = SubmitField('Şifrə Yeniləmə Sorğusu Göndər')
+
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError('Yazdığınız email ünvanına uyğun hesab tapılmadı. Zəhmət olmasa qeydiyyatdan keçin.')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Şifrə', validators=[DataRequired()])
+    confirm_password = PasswordField('Təsdiq Şifrəsi', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Şifrəmi Yenilə')

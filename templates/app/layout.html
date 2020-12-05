@@ -36,7 +36,7 @@
 
         <!-- include summernote css/js -->
         <link href="{{ url_for('static', filename='assets/summernote/summernote.min.css') }}" rel="stylesheet">
-
+        
     </head>
 
 
@@ -171,7 +171,7 @@
                     <div class="right-column pull-right clearfix">
                         <ul class="social-links clearfix">
                             <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-                            <li><a href=""><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                             <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                         </ul>
                     </div>
@@ -199,8 +199,6 @@
                     <ul class="clearfix">
                         <li><a href="#"><span class="fab fa-twitter"></span></a></li>
                         <li><a href="#"><span class="fab fa-facebook-square"></span></a></li>
-                        <li><a href="#"><span class="fab fa-pinterest-p"></span></a></li>
-                        <li><a href="#"><span class="fab fa-instagram"></span></a></li>
                         <li><a href="#"><span class="fab fa-youtube"></span></a></li>
                     </ul>
                 </div>
@@ -242,10 +240,10 @@
                                         <div class="row clearfix">
                                             <div class="col-12 column">
                                                 <ul class="links clearfix">
-                                                    <li><a href="#">Haqqımızda</a></li>
+                                                    <li><a href="{{ url_for('about') }}">Haqqımızda</a></li>
                                                     <li><a href="#">Bölmələr</a></li>
                                                     <li><a href="#">Əlaqə Saxla</a></li>
-                                                    <li><a href="#">Olimpiadalara Hazırlıq Mərkəzi</a></li>
+                                                    <li><a href="https://www.olimpiada.edu.az/">Olimpiadalara Hazırlıq Mərkəzi</a></li>
                                                 </ul>
                                             </div>
                                         </div>

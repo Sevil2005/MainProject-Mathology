@@ -2,15 +2,18 @@ import os
 import smtplib
 import secrets
 from flask import render_template, url_for, flash, redirect, request, abort
-from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from app import app, db, bcrypt, mail
+from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm
 from app.models import User, Post, book, category
 from flask_login import login_user, current_user, logout_user, login_required
 from PIL import Image
+from werkzeug.utils import secure_filename
+from flask_mail import Message
 
 EMAIL_ADDRESS = os.environ.get('EMAIL_USER')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASS')
-
+app.config['UPLOAD_PATH_ACCOUNT'] = 'static/profile_pics'
+app.config['UPLOAD_PATH_POST'] = 'static/post_imgs'
 
 @app.route('/')
 @app.route('/ana-səhifə')
@@ -62,29 +65,16 @@ def logout():
     return redirect(url_for('home'))
 
 
-def save_picture_user(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    path = os.path.dirname(app.instance_path)
-    picture_path = os.path.join(path, 'static/profile_pics', picture_fn)
-
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-
-    return picture_fn
-
-
 @app.route("/hesabım", methods=['GET', 'POST'])
 @login_required
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
-            picture_file = save_picture_user(form.picture.data)
-            current_user.image_file = picture_file
+            uploaded_file = request.files['picture']
+            filename = secure_filename(uploaded_file.filename)
+            uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_ACCOUNT'], filename))
+            current_user.image_file = filename
         current_user.username = form.username.data
         current_user.firstname = form.firstname.data
         current_user.lastname = form.lastname.data
@@ -114,11 +104,16 @@ def blog():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title = form.title.data, content = form.content.data, author = current_user)
+        uploaded_file = request.files['post_img']
+        filename = secure_filename(uploaded_file.filename)
+        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_POST'], filename))
+
+        post = Post(title = form.title.data, content = form.content.data, author = current_user, post_img = filename)
         db.session.add(post)
         db.session.commit()
         flash('Yeni məqalə haqqında sorğu sistemə uğurla göndərildi!', 'success')
         return redirect(url_for('blog'))
+    
     return render_template('app/adviceBlog/create_post.html', title="Yeni Məqalə", form=form)
 
 
@@ -136,6 +131,11 @@ def update_post(post_id):
         abort(403)
     form = PostForm()
     if form.validate_on_submit():
+        if form.post_img.data:
+            uploaded_file = request.files['post_img']
+            filename = secure_filename(uploaded_file.filename)
+            uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_POST'], filename))
+            post.post_img = filename
         post.title = form.title.data
         post.content = form.content.data
         db.session.commit()
@@ -171,3 +171,45 @@ def olympiads(id):
     books = book.query.filter_by(category_id=id)
     cat = category.query.filter_by(id=id).first()
     return render_template('app/books/book.html', title=cat.name, books=books)
+
+# Reset Password
+
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message('Şifrə Yeniləmə Sorğusu', sender='mathology.edu.az@gmail.com', recipients=[user.email])
+    msg.body = f'''Şifrənizi yeniləmək üçün aşağıdakı linkə daxil ola bilərsiz:
+{url_for('reset_token', token=token, _external=True)}
+Əgər siz belə bir sorğu göndərməmisinizsə narahat olmayın, bu maili silə bilərsiz, hesabınızla bağlı heç bir dəyişiklik edilməyəcək.
+'''
+    mail.send(msg)
+
+
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash('Email ünvanınıza şifrə yeniləməsi üçün link göndərildi.', 'info')
+        return redirect(url_for('login'))
+    return render_template('app/user/reset_request.html', title='Şifrəni Yeniləmək Üçün Sorğu Göndər', form=form)
+
+
+@app.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('reset_request'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        flash('Şifrəniz yeniləndi! İndi hesabınıza daxil ola bilərsiniz.', 'success')
+        return redirect(url_for('login'))
+    return render_template('app/user/reset_token.html', title='Şifrəni Yenilə', form=form)

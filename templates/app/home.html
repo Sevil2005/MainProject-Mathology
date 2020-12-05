@@ -9,10 +9,17 @@
                         <div class="content-box">
                             <h1>Riyaziyyat & Onun Sirrli Dünyası.</h1>
                             <p>Mathology ilə riyaziyyat olimpiadalarına uğurla hazırlaşmanın sirrlərini kəşf edəcəksiniz.</p>
-                            <div class="btn-box">
-                                <a href="{{ url_for('register') }}" class="theme-btn style-seven"><i class="flaticon-next"></i>Qeydiyyat</a>
-                                <a href="{{ url_for('login') }}" class="theme-btn style-six">Daxil Ol</a>
-                            </div>
+                            {% if current_user.is_authenticated == False %}
+                                <div class="btn-box">
+                                    <a href="{{ url_for('register') }}" class="theme-btn style-seven"><i class="flaticon-next"></i>Qeydiyyat</a>
+                                    <a href="{{ url_for('login') }}" class="theme-btn style-six">Daxil Ol</a>
+                                </div>
+                            {% else %}
+                                <div class="btn-box">
+                                    <a href="#" class="theme-btn style-seven"><i class="flaticon-next"></i>Olimpiadalar</a>
+                                    <a href="{{ url_for('blog') }}" class="theme-btn style-six">Məqalə Paylaş</a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

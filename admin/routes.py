@@ -1,9 +1,12 @@
+import os
 from app import app, db
 from app.models import User, Post, book, category
 from flask import render_template, url_for, redirect, request, abort
 from app.forms import BookForm, CatForm, PostForm
 from flask_login import login_user, current_user, logout_user, login_required
+from werkzeug.utils import secure_filename
 
+app.config['UPLOAD_PATH_BOOK'] = 'static/book_imgs'
 
 @app.route('/admin')
 @login_required
@@ -37,7 +40,7 @@ def delete_student(id):
 
 #Books
 
-@app.route('/kitablar')
+@app.route('/admin/kitablar')
 @login_required
 def bookTable():
     if User.query.get(1) == current_user:
@@ -47,16 +50,20 @@ def bookTable():
     else:
         abort(403)
 
-@app.route('/kitablar/əlavə-et', methods=['GET', 'POST'])
+@app.route('/admin/kitablar/əlavə-et', methods=['GET', 'POST'])
 @login_required
 def bookAddForm():
     if User.query.get(1) == current_user:
         categories = category.query.all()
         form = BookForm()
         if form.validate_on_submit():
+            uploaded_file = request.files['book_img']
+            filename = secure_filename(uploaded_file.filename)
+            uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_BOOK'], filename))
+
             cat = form.category.data
             catObj = category.query.filter_by(id = cat).first()
-            new_book = book(name = form.name.data, description = form.description.data, url = form.url.data, category = catObj)
+            new_book = book(name = form.name.data, description = form.description.data, url = form.url.data, category = catObj, book_img = filename)
             db.session.add(new_book)
             db.session.commit()
             return redirect(url_for('bookTable'))
@@ -72,6 +79,11 @@ def edit_book(id):
         categories = category.query.all()
         form = BookForm()
         if form.validate_on_submit():
+            if form.book_img.data:
+                uploaded_file = request.files['book_img']
+                filename = secure_filename(uploaded_file.filename)
+                uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_BOOK'], filename))
+                selectedBook.book_img = filename
             cat = form.category.data
             newCatObj = category.query.filter_by(id = cat).first()
             selectedBook.name = form.name.data
@@ -84,8 +96,7 @@ def edit_book(id):
             form.name.data = selectedBook.name
             form.description.data = selectedBook.description
             form.url.data = selectedBook.url
-            form.category.data = selectedBook.category.id
-        return render_template('/admin/bookAddForm.html', categories=categories, form=form)
+        return render_template('/admin/bookAddForm.html', categories=categories, form=form, book=selectedBook)
     else:
         abort(403)
 
@@ -102,7 +113,7 @@ def delete_book(id):
 
 #Categories
 
-@app.route('/kateqoriya-əlavə-et/yeni', methods=['GET', 'POST'])
+@app.route('/admin/kateqoriya-əlavə-et/yeni', methods=['GET', 'POST'])
 @login_required
 def addCategory():
     if User.query.get(1) == current_user:

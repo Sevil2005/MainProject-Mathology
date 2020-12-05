@@ -1,22 +1,52 @@
 {% extends "app/layout.html" %}
 {% block content %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ url_for('static', filename = 'profile_pics/' + post.author.image_file) }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
-              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-              {% if post.author == current_user %}
-                <div>
-                  <a class=" btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id)}}">Postu Yenilə</a>
-                  <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Sil</button>
+        <!--Page Title-->
+        <section class="page-title text-center style-two">
+            <div class="pattern-layer" style="background-image: url({{ url_for('static', filename='assets/images/shape/shape-62.png') }})"></div>
+            <div class="auto-container">
+                <div class="content-box">
+                    <h1>{{ title }}</h1>
+                    <h2>Yazan : {{ post.author.username }}</h2>
                 </div>
-              {% endif %}
             </div>
-            <h2 class="article-title">{{ post.title }}</h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
+        </section>
+        <!--End Page Title-->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <!-- blog-details -->
+        <section class="sidebar-page-container blog-details">
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div class="col-12 content-side" style="margin-top:-65px;">
+                        <div class="article-metadata" style="display:inline-flex;">
+                            <img class="rounded-circle article-img" src="{{ url_for('static', filename = 'profile_pics/' + post.author.image_file) }}" style="height: 125px; width: 125px;">
+                            <div class="mt-10">  
+                                <a href="{{ url_for('user_posts', username=post.author.username) }}"><h2 class="ml-50">{{ post.author.username }}</h2></a>
+                                <small><h6 class="ml-50">Tarix : {{ post.date_posted.strftime('%d-%m-%Y') }}</h6></small>
+                                {% if post.author == current_user %}
+                                    <div style="margin-top:18px;" class="ml-35">
+                                        <a class="theme-btn style-seven" style="line-height: 18px;" href="{{ url_for('update_post', post_id=post.id)}}">Postu Yenilə</a>
+                                        <button type="button" class="theme-btn btn-danger style-six ml-10" style="line-height: 25px; background-image: linear-gradient(to right, #000000 0%, #ca0b00 50%, #000000 100%) !important;" data-toggle="modal" data-target="#deleteModal">Sil</button>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div> 
+                        <div class="blog-details-content mt-30">
+                            <div class="inner-box">
+                                <p>{{ post.content|safe }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Modal -->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -24,16 +54,17 @@
               <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalLabel">Postu silmək istədiyinizdən əminsiniz?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Bağla</button>
                 <form action = "{{ url_for('delete_post', post_id = post.id) }}" method="POST">
-                  <input type="submit" class = "btn btn-danger" value= "Sil">
+                   <input type="submit" class = "btn btn-danger" value= "Sil">
                 </form>
               </div>
             </div>
           </div>
         </div>
+
 {% endblock content %}

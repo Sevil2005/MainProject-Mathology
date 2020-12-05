@@ -18,7 +18,7 @@
                     <div class="case-block-two">
                         <div class="inner-box">
                             <figure class="image-box">
-                                <img src="{{ url_for('static', filename='assets/images/gallery/gallery-1.jpg') }}" alt="">
+                                <img src="{{ url_for('static', filename='book_imgs/' + single_book.book_img) }}" alt="" style="height:250px; width:370px; object-fit: cover;">
                                 <div class="link"><a href="{{ single_book.url }}"><i class="flaticon-hyperlink"></i></a></div>
                                 <div class="overlay-layer"></div>
                             </figure>
