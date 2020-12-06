@@ -69,7 +69,6 @@ class PostForm(FlaskForm):
     content = TextAreaField('Məqalənin Detalları', validators=[DataRequired()], render_kw={"placeholder": "Məqalənin Mətnini Bura Yazın...", "id": "textarea"})
     submit = SubmitField('Məqaləni Paylaş', render_kw={"style": "width:100%;"})
 
-
 class BookForm(FlaskForm):
     name = StringField('Adı', validators=[DataRequired()])
     description = TextAreaField('Kitabın Təsviri', validators=[DataRequired()])
@@ -78,11 +77,9 @@ class BookForm(FlaskForm):
     book_img = FileField('Kitabın Şəklini Əlavə Et', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Kitabı Əlavə Et')
 
-
 class CatForm(FlaskForm):
     name = StringField('Adı', validators=[DataRequired()])
     submit = SubmitField('Kateqoriya Əlavə Et')
-
 
 class RequestResetForm(FlaskForm):
     email = StringField('Email Ünvanı', validators=[DataRequired(), Email()])
