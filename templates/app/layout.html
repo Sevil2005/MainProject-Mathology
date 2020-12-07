@@ -142,6 +142,8 @@
                                                 <a class="dropdown-item" href="{{ url_for('logout') }}"><i data-feather="log-out" class="align-self-center menu-icon icon-dual" style="display: inline;"></i><h6 style="display: inline;">Çıxış</h6></a>
                                             </div>
                                         </li>
+                                        {% else %}
+                                        <li class="current dropdown"><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt" style="font-size:25px;"></i></a></li>
                                         {% endif %}
                                     </ul>
                                 </div>

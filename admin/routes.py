@@ -183,7 +183,7 @@ def edit_post(id):
     else:
         abort(403)
 
-@app.route('/admin/kitablar/post-sil/<int:id>', methods = ['GET'])
+@app.route('/admin/məsləhət-bloqu/post-sil/<int:id>', methods = ['GET'])
 @login_required
 def delete_post_admin(id):
     if User.query.get(1) == current_user:

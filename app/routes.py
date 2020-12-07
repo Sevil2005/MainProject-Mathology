@@ -166,6 +166,10 @@ def user_posts(username):
 
 # Books
 
+@app.route('/olimpiadalar')
+def allolympiads():
+    return render_template('app/about.html')
+
 @app.route('/olimpiadalar/<int:id>')
 def olympiads(id):
     books = book.query.filter_by(category_id=id)
