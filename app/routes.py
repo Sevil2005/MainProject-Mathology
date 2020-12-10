@@ -1,6 +1,7 @@
 import os
 import smtplib
 import secrets
+from env import EMAIL_USER, EMAIL_PASS
 from flask import render_template, url_for, flash, redirect, request, abort
 from app import app, db, bcrypt, mail
 from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm
@@ -10,8 +11,8 @@ from PIL import Image
 from werkzeug.utils import secure_filename
 from flask_mail import Message
 
-EMAIL_ADDRESS = os.environ.get('EMAIL_USER')
-EMAIL_PASSWORD = os.environ.get('EMAIL_PASS')
+EMAIL_ADDRESS = EMAIL_USER
+EMAIL_PASSWORD = EMAIL_PASS
 app.config['UPLOAD_PATH_ACCOUNT'] = 'static/profile_pics'
 app.config['UPLOAD_PATH_POST'] = 'static/post_imgs'
 
@@ -169,6 +170,7 @@ def user_posts(username):
 @app.route('/olimpiadalar')
 def allolympiads():
     return render_template('app/about.html')
+
 
 @app.route('/olimpiadalar/<int:id>')
 def olympiads(id):
