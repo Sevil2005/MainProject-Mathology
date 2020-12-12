@@ -96,6 +96,7 @@
   -ms-transition:all 300ms ease;
   -o-transition:all 300ms ease;
   transition:all 300ms ease;
+  margin-top: 8px;
 }
 
 .main-menu .navigation > li:last-child{
