@@ -1,6 +1,2 @@
 .idea
 venv
-app/site.db
-static/profile_pics
-static/book_imgs
-static/post_imgs
