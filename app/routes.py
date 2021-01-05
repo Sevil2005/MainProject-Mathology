@@ -1,7 +1,6 @@
 import os
 import smtplib
 import secrets
-from env import EMAIL_USER, EMAIL_PASS
 from flask import render_template, url_for, flash, redirect, request, abort
 from app import app, db, bcrypt, mail
 from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm
