@@ -10,8 +10,6 @@ from PIL import Image
 from werkzeug.utils import secure_filename
 from flask_mail import Message
 
-EMAIL_ADDRESS = EMAIL_USER
-EMAIL_PASSWORD = EMAIL_PASS
 app.config['UPLOAD_PATH_ACCOUNT'] = 'static/profile_pics'
 app.config['UPLOAD_PATH_POST'] = 'static/post_imgs'
 
